@@ -1,4 +1,4 @@
 package edu.handong.week12.book.dto;
 
-public record BookRequest (Long id, String title, String author, int price){
+public record BookRequest (String title, String author, int price){
 }

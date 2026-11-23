@@ -27,3 +27,9 @@ Pagination & OpenAPI
 : pageable은 요청정보로 어떤 페이지를 몇개씩 어떤 정렬로 가져올지에 대한 정보를, Page<T>는 응답정보로 데이터 목록과 메타데이터를 담는다. 해당 정렬은 가격을 내림차로 정렬하는 기능을 수행한다.
 8. /v3/api-docs와 /swagger-ui.html의 역할을 구분해서 설명하세요.
 : /v3/api-docs는 OpenAPI 명세 JSON이고 /swagger-ui.html은 해당 JSON을 읽어 사람이 읽기 쉽게 해주는 웹 UI이다. 둘의 차이는 데이터 명세인 것과 데이터를 보여 주는 화면이라는 점에서 차이가 있다.
+
+
+STEP 3
+변경 전/후 API 요청과 응답 차이를 README에 기록합니다.
+: 어떤 요청을 해도 상태코드가 200이었는데 POST, DELETE의 경우 201, 204로 변경되었다. 전에는 모든 return을 Entity로 하였는데, 지금은 BookResponse로 반환한다. 
+

@@ -2,6 +2,8 @@ package edu.handong.week12.book;
 
 import edu.handong.week12.book.dto.BookRequest;
 import edu.handong.week12.book.dto.BookResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,35 +18,34 @@ public class BookController {
     }
 
     @GetMapping
-    public List<Book> list() {
-        return service.findAll();
+    public ResponseEntity<List<BookResponse>> list() {
+        List<BookResponse> result = service.findAll();
+        return ResponseEntity.ok(result);
     } // TODO: Pageable
 
     @GetMapping("/{id}")
-    public Book get(@PathVariable Long id) {
-        return service.findById(id);
+    public ResponseEntity<BookResponse> get(@PathVariable Long id) {
+        BookResponse result = service.findById(id);
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping
-    public BookResponse create(@RequestBody BookRequest request) {
-        Book book = new Book();
-
-        book.setTitle(request.title());
-        book.setAuthor(request.author());
-        book.setPrice(request.price());
-
-        Book saved = service.create(book);
-
-        return BookResponse.from(saved);
+    public ResponseEntity<BookResponse> create(@RequestBody BookRequest request) {
+        BookResponse saved = service.create(request);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(saved);
     } // TODO: @Valid, ResponseEntity 201
 
     @PutMapping("/{id}")
-    public Book update(@PathVariable Long id, @RequestBody Book input) {
-        return service.update(id, input);
+    public ResponseEntity<BookResponse> update(@PathVariable Long id, @RequestBody BookRequest request) {
+        BookResponse saved = service.update(id,request);
+        return ResponseEntity.ok(saved);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
+        return ResponseEntity.noContent().build();
     } // TODO: 204
 }
