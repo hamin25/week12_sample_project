@@ -1,5 +1,7 @@
 package edu.handong.week12.book;
 
+import edu.handong.week12.book.dto.BookRequest;
+import edu.handong.week12.book.dto.BookResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,8 +26,16 @@ public class BookController {
     }
 
     @PostMapping
-    public Book create(@RequestBody Book input) {
-        return service.create(input);
+    public BookResponse create(@RequestBody BookRequest request) {
+        Book book = new Book();
+
+        book.setTitle(request.title());
+        book.setAuthor(request.author());
+        book.setPrice(request.price());
+
+        Book saved = service.create(book);
+
+        return BookResponse.from(saved);
     } // TODO: @Valid, ResponseEntity 201
 
     @PutMapping("/{id}")
