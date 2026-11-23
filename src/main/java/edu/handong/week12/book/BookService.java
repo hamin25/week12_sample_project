@@ -5,6 +5,8 @@ import edu.handong.week12.book.dto.BookResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @Service
 public class BookService {
@@ -14,10 +16,10 @@ public class BookService {
     this.repository = repository;
   }
 
-  public List<BookResponse> findAll() {
-    return repository.findAll().stream()
-            .map(BookResponse::from)
-            .toList();
+  public Page<BookResponse> findAll(Pageable pageable) {
+    return repository.findAll(pageable)
+            .map(BookResponse::from);
+
   } // TODO STEP 6: Pagination/Sorting
 
   public BookResponse findById(Long id) {
